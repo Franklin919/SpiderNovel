@@ -51,7 +51,8 @@ public class SpiderTest {
 				//System.out.println("文件名："+bookFile);
 				if(!bookFolder.exists()) {
 					bookFolder.mkdirs();
-				}else if(!bookFile.exists()){
+				};
+				if(!bookFile.exists()){
 					PrintStream ps = new PrintStream(new FileOutputStream(new File("/Users/franklin919/Documents/小说/"+bookSort, title + ".txt")));
 					ps.println("");
 					ArrayList list = new ArrayList<Node>(SpiderUtils.getChara(url));
