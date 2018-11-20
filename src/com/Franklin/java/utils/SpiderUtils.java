@@ -36,15 +36,15 @@ public class SpiderUtils {
     }
 	
 	public static String getTitle(String url) throws IOException{
-		Document doc = Jsoup.connect(url).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
-		String contentOrigin = doc.getElementById("list").childNodes().get(1).childNodes().get(1).toString();
-		String title = subString(contentOrigin,"《","》");
+		Document doc = Jsoup.connect(url).timeout(60000).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
+		String contentOrigin = doc.getElementById("info").getElementsByTag("h1").get(0).toString();
+		String title = subString(contentOrigin,"<h1>","</h1>");
 		return title;
 	}
 	
 	public static ArrayList getChara(String url) throws IOException{
 		String pages = null;
-		Document doc = Jsoup.connect(url).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
+		Document doc = Jsoup.connect(url).timeout(60000).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
 		List<Node> contentOrigin = doc.getElementById("list").childNodes().get(1).childNodes();
 		ArrayList al = new ArrayList<Node>(contentOrigin);
 		al.remove(0);
@@ -63,7 +63,7 @@ public class SpiderUtils {
 	
 	public static ArrayList getBooklist(String url) throws IOException{
 		String book = null;
-		Document doc = Jsoup.connect(url).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
+		Document doc = Jsoup.connect(url).timeout(60000).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
 		Elements contentOrigin = doc.getElementsByClass("newlistmulu").get(0).getElementsByTag("a");
 		ArrayList booklist = new ArrayList<Node>();
 		for(int i = 0; i < contentOrigin.size(); i++) {
@@ -74,7 +74,7 @@ public class SpiderUtils {
 	}
 	
 	public static String getText(String url) throws IOException{
-		Document doc = Jsoup.connect(url).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
+		Document doc = Jsoup.connect(url).timeout(60000).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0").get();
 		Element contentOrigin = doc.getElementById("content");
 		String contentText = contentOrigin.html();
 		String  contentFinally= contentText.replaceAll("<br>|&nbsp;","");
