@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,10 +14,22 @@ import org.jsoup.nodes.Node;
 import com.Franklin.java.utils.SpiderUtils;
 
 public class SpiderTest {
+	
+
+    private static String formattedDecimalToPercentage(double decimal)
+    {
+    	//获取格式化对象
+    	NumberFormat nt = NumberFormat.getPercentInstance();
+    	//设置百分数精确度2即保留两位小数
+    	nt.setMinimumFractionDigits(2);
+    	return nt.format(decimal);
+    }
+
 	public static void main(String[] args) {
 		try {
 			Scanner sc = new Scanner(System.in);
 			String bookSort = null;
+			double d = 0;	//进度
 			System.out.println("【1:玄幻小说；2:修真小说；3:都市小说；4:穿越小说；5:网游小说；6:科幻小说】");
 			System.out.println("请选择要爬取的小说类型：（输入编号即可）");
 			int sortNum = sc.nextInt();
@@ -60,11 +73,12 @@ public class SpiderTest {
 					for (int j = 1; j < list.size(); j++) {
 						// System.out.print(url + list.get(i) + ".html：");
 						try {
+							d= (double)j / list.size();
 							// System.out.println("第"+i+"章开始下载!");
 							ps.append("第" + j + "章!\r\n");
 							ps.append(SpiderUtils.getText(url + list.get(j) + ".html"));// 在已有的基础上添加字符串
 							ps.append("\r\n");
-							System.out.println("第" + j + "章下载结束!");
+							System.out.println("下载进度："+ formattedDecimalToPercentage(d) +"，" +j+" / "+list.size());
 						} catch (Exception e) {
 							e.printStackTrace();
 							continue;
